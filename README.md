@@ -1,5 +1,17 @@
 # DnsClient.NET
 
+## Purpose of D2L Fork
+
+DnsClient found on github is owned by one individual, and uses an older version of System.Buffers.
+
+We needed to update that dependency, but got no reply on our PR. We had several options to rectify the dependency mismatch:
+
+1. Use Binding Redirects in all the entry point app/web.config files. We want to avoid this in the LMS because of the massive amount of places we'd need to update.
+1. Put in a PR on the open source version of DnsClient. We tried this, and got no reply. Only one maintainer.
+1. `AutoGenerateBindingRedirects` won't work with how we generate our web.config.
+1. Fork the repo and update the dependency. What we did for now.
+1. Future plan - move this logic to a lambda function and use Node.js's native MX/SPF/TXT record checking and get rid of this dependency.
+
 [![Build Status](https://dev.azure.com/michaco/DnsClient/_apis/build/status/MichaCo.DnsClient.NET?branchName=dev&label=Build)](https://dev.azure.com/michaco/DnsClient/_build/latest?definitionId=1&branchName=dev)
 [![Code Coverage](https://img.shields.io/azure-devops/coverage/michaco/DnsClient/1?label=Coverage&style=flat&color=informational)](https://dev.azure.com/michaco/DnsClient/_build/latest?definitionId=1&branchName=dev)
 [![NuGet](https://img.shields.io/nuget/v/DnsClient?color=brightgreen&label=NuGet%20Stable)](https://www.nuget.org/packages/DnsClient)

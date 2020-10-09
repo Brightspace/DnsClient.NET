@@ -1,0 +1,15 @@
+on: push
+
+jobs:
+  build_and_publish:
+    runs-on: [self-hosted, HQ, Linux]
+    steps:
+      - name: checkout
+        uses: Brightspace/third-party-actions@actions/checkout
+
+      - name: pack
+        run: dotnet pack src/DnsClient/DnsClient.csproj -c Release --no-build --version-suffix $GITHUB_RUN_NUMBER -p:TargetFrameworks=netstandard2.0
+
+      - name: publish to nuget
+        if: github.ref == 'refs/heads/master'
+        run: dotnet nuget push src/DnsClient/bin/Release/*.nupkg --source 'http://nuget.build.d2l/nuget/stable'
